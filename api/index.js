@@ -10,8 +10,14 @@ const openai = new OpenAI({
 
 export default async function handler(req, res) {
 
-    // Configura os cabeçalhos de CORS
-    res.setHeader('Access-Control-Allow-Origin', 'https://ezynutri.vercel.app');
+    // Lista de origens permitidas
+    const allowedOrigins = ['https://ezynutri.vercel.app', 'http://localhost:3000'];
+    const origin = req.headers.origin;
+
+    // Configura os cabeçalhos de CORS dinamicamente
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -52,7 +58,7 @@ export default async function handler(req, res) {
                 - Quantidade de refeições diárias: ${dados.quantidadeRefeicoes}
                 - Alimentos a evitar: ${dados.alimentosIndesejados.join(', ')}
     
-                Forneça um plano alimentar que siga essas diretrizes com refeições equilibradas e saudáveis para cada período do dia. Estruture a resposta em um texto simples, não Markdown.
+                Forneça um plano alimentar que siga essas diretrizes com refeições equilibradas e saudáveis para cada período do dia. Estruture a resposta em um texto simples.
             `;
     
             const response = await openai.chat.completions.create({
