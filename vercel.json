@@ -2,15 +2,15 @@
     "version": 2,
     "builds": [
         {
-            "src": "src/index.js",
+            "src": "api/index.js",
             "use": "@vercel/node"
         }
     ],
-
+    
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "src/index.js"
+            "src": "/api/gerarDieta",
+            "dest": "api/index.js"
         }
     ]
 }
